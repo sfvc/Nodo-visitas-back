@@ -4,7 +4,7 @@ import { UpdatePersonalAutorizadoDto } from './dto/update-personal-autorizado.dt
 
 @Injectable()
 export class PersonalAutorizadoService {
-  
+
   create(createPersonalAutorizadoDto: CreatePersonalAutorizadoDto) {
     return 'This action adds a new personalAutorizado';
   }

@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PersonalAutorizadoService } from './personal-autorizado.service';
 import { CreatePersonalAutorizadoDto } from './dto/create-personal-autorizado.dto';
 import { UpdatePersonalAutorizadoDto } from './dto/update-personal-autorizado.dto';
 
 @Controller('personal-autorizado')
 export class PersonalAutorizadoController {
-  constructor(private readonly personalAutorizadoService: PersonalAutorizadoService) {}
+  constructor(
+    private readonly personalAutorizadoService: PersonalAutorizadoService,
+  ) {}
 
   @Post()
   create(@Body() createPersonalAutorizadoDto: CreatePersonalAutorizadoDto) {
@@ -23,8 +33,14 @@ export class PersonalAutorizadoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePersonalAutorizadoDto: UpdatePersonalAutorizadoDto) {
-    return this.personalAutorizadoService.update(+id, updatePersonalAutorizadoDto);
+  update(
+    @Param('id') id: string,
+    @Body() updatePersonalAutorizadoDto: UpdatePersonalAutorizadoDto,
+  ) {
+    return this.personalAutorizadoService.update(
+      +id,
+      updatePersonalAutorizadoDto,
+    );
   }
 
   @Delete(':id')
