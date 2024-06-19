@@ -10,7 +10,7 @@ export class Visita {
   fecha: Date;
 
   @Column({ type: 'text' })
-  motivo: string;
+  momento: string;
 
   @ManyToOne(() => PersonalAutorizado, personalAutorizado => personalAutorizado.visitas)
   personalAutorizado: PersonalAutorizado;

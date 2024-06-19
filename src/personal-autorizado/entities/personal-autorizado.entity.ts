@@ -18,9 +18,6 @@ export class PersonaAutorizada {
   @Column({ unique: true })
   email: string;
 
-  @Column()
-  password: string;
-
   @OneToMany(() => Visita, visita => visita.personaAutorizada)
   visitas: Visita[];
 }
