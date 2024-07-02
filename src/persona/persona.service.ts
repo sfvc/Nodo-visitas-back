@@ -40,7 +40,7 @@ export class PersonaService {
 
     let persona:Persona
     const search = term.toLowerCase();
-    const queryBuilder=this.personaRepository.createQueryBuilder();
+    const queryBuilder=this.personaRepository.createQueryBuilder("persona");
     persona= await queryBuilder.where('LOWER(nombre)=:nombre or LOWER(apellido)=:apellido',{nombre:search,apellido:search}).getOne()
    
     if(!persona)

@@ -4,6 +4,7 @@ import { UpdateIngresoDto } from './dto/update-ingreso.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Ingresos } from './entities/ingreso.entity';
+import { PaginationDto } from '../common/pagination.dto';
 
 @Injectable()
 export class IngresosService {
@@ -35,24 +36,31 @@ export class IngresosService {
 
   }
 
-  async findAll() {
-    const ingreso=await this.ingresosRepository.find({})
+  async findAll(PaginationDto:PaginationDto) {
+    let {limit=10,offset=0}=PaginationDto;
+    const ingreso=await this.ingresosRepository.find({take:limit,skip:offset});
     if(!ingreso)
       {
-        throw new  NotFoundException("No se encontraron ingreso")
+        throw new  NotFoundException("No se encontraron ingreso");
       }
     return ingreso;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} ingreso`;
+  async findOne(id: number) {
+    const ingreso=this.ingresosRepository.findBy({id})
+    if(!ingreso)throw new NotFoundException("No se encontro el ingreso")
+    return ingreso;
   }
 
   update(id: number, updateIngresoDto: UpdateIngresoDto) {
     return `This action updates a #${id} ingreso`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ingreso`;
+  async remove(id: number) {
+    const ingreso=await this.ingresosRepository.findBy({id})
+    if(!ingreso)throw new NotFoundException("No se encontro el ingreso")
+    await this.ingresosRepository.remove(ingreso);
+  
+    return `El ingreso fue borrado correctamente`;
   }
 }

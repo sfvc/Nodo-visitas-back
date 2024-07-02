@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { IngresosService } from './ingresos.service';
 import { CreateIngresoDto } from './dto/create-ingreso.dto';
 import { UpdateIngresoDto } from './dto/update-ingreso.dto';
+import { PaginationDto } from 'src/common/pagination.dto';
 
 @Controller('ingresos')
 export class IngresosController {
@@ -13,8 +14,8 @@ export class IngresosController {
   }
 
   @Get()
-  findAll() {
-    return this.ingresosService.findAll();
+  findAll(@Query() PaginationDto:PaginationDto) {
+    return this.ingresosService.findAll(PaginationDto);
   }
 
   @Get(':id')
