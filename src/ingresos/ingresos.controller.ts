@@ -37,4 +37,10 @@ export class IngresosController {
   buscarDia(@Param('term') term:string){
     return this.ingresosService.buscarDia(term)
   }
+
+  
+  @Get('buscar/persona/:term')
+  buscarPersona(@Param('term') term:string){
+    return this.ingresosService.buscarPersona(term)
+  }
 }

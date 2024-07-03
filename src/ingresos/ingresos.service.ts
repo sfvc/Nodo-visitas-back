@@ -89,4 +89,18 @@ export class IngresosService {
       }
     return ingreso
   }
+
+  async buscarPersona(term:string)
+  {
+    const ingreso=await this.ingresosRepository
+    .createQueryBuilder('ingreso')
+    .leftJoinAndSelect('ingreso.persona', 'persona')
+    .where('ingreso.persona= :term ', { term})
+    .getMany();
+    if(!ingreso)
+      {
+        throw new NotFoundException("No se encontro ninguna ingreso")
+      }
+    return ingreso
+  }
 }
