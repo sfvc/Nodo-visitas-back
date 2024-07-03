@@ -5,6 +5,7 @@ import { PersonaModule } from './persona/persona.module';
 import { RolesModule } from './roles/roles.module';
 import { IngresosModule } from './ingresos/ingresos.module';
 import { CommonModule } from './common/common.module';
+import { AreaModule } from './area/area.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -21,7 +22,8 @@ import { CommonModule } from './common/common.module';
      PersonaModule,
      RolesModule,
      IngresosModule,
-     CommonModule
+     CommonModule,
+     AreaModule
     ],
 })
 export class AppModule { }

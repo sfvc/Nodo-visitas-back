@@ -32,4 +32,9 @@ export class IngresosController {
   remove(@Param('id') id: string) {
     return this.ingresosService.remove(+id);
   }
+
+  @Get('buscar/:term')
+  buscarDia(@Param('term') term:string){
+    return this.ingresosService.buscarDia(term)
+  }
 }

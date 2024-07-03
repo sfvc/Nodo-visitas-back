@@ -3,10 +3,12 @@ import { PersonaService } from './persona.service';
 import { PersonaController } from './persona.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Persona } from './entities/persona.entity';
+import { Roles } from 'src/roles/entities/role.entity';
+import { Area } from 'src/area/entities/area.entity';
 
 @Module({
   controllers: [PersonaController],
   providers: [PersonaService],
-  imports:[TypeOrmModule.forFeature([Persona])]
+  imports:[TypeOrmModule.forFeature([Persona,Roles,Area])]
 })
 export class PersonaModule {}

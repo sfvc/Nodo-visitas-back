@@ -20,9 +20,9 @@ export class PersonaController {
     return this.personaService.findAll(PaginationDto);
   }
 
-  @Get(':term')
-  async findOne(@Param('term')  term: string) {
-    return this.personaService.findOne(term);
+  @Get(':id')
+  async findOne(@Param('id')  id: string) {
+    return this.personaService.findOne(+id);
   }
 
   @Patch(':id')
@@ -33,5 +33,11 @@ export class PersonaController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.personaService.remove(+id);
+  }
+
+  @Get('buscar/:term')
+  async buscarPersona(@Param('term') term:string)
+  {
+    return this.personaService.buscarPersona(term);
   }
 }

@@ -15,10 +15,9 @@ export class CreatePersonaDto {
     telefono:string
 
     @IsNumber()
-    @IsOptional()
-    area_id?:number   
+    areaId?:number   
 
     @IsNumber()
-    rol_id:number   
+    rolId:number   
 
 }

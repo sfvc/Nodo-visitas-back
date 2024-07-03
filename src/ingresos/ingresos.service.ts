@@ -5,13 +5,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Ingresos } from './entities/ingreso.entity';
 import { PaginationDto } from '../common/pagination.dto';
+import { Persona } from 'src/persona/entities/persona.entity';
 
 @Injectable()
 export class IngresosService {
 
   constructor(
     @InjectRepository(Ingresos)
-    private readonly ingresosRepository:Repository<Ingresos>
+    private readonly ingresosRepository:Repository<Ingresos>,
+
+    @InjectRepository(Persona)
+    private readonly personaRepository:Repository<Persona>,
   ){}
   
 
@@ -25,9 +29,15 @@ export class IngresosService {
       createIngresoDto.dia = dia;
       createIngresoDto.hora = hora;
 
+      const persona = await this.personaRepository.findOneBy({id: createIngresoDto.personaId});
+      if (!persona) {
+        throw new NotFoundException(`Persona con id ${createIngresoDto.personaId} no encontrada`);
+      }
 
-
-      const ingreso=this.ingresosRepository.create(createIngresoDto)
+      const ingreso = this.ingresosRepository.create({
+        ...createIngresoDto,
+        persona: persona,
+      });
       await this.ingresosRepository.save(ingreso);
       return ingreso;
     } catch (error) {
@@ -38,7 +48,8 @@ export class IngresosService {
 
   async findAll(PaginationDto:PaginationDto) {
     let {limit=10,offset=0}=PaginationDto;
-    const ingreso=await this.ingresosRepository.find({take:limit,skip:offset});
+    const ingreso=await this.ingresosRepository.find({take:limit,skip:offset,relations: ['persona']});
+
     if(!ingreso)
       {
         throw new  NotFoundException("No se encontraron ingreso");
@@ -62,5 +73,20 @@ export class IngresosService {
     await this.ingresosRepository.remove(ingreso);
   
     return `El ingreso fue borrado correctamente`;
+  }
+
+
+  async buscarDia(term:string)
+  {
+    const ingreso=await this.ingresosRepository
+    .createQueryBuilder('ingreso')
+    .leftJoinAndSelect('ingreso.persona', 'persona')
+    .where('ingreso.dia= :term ', { term})
+    .getMany();
+    if(!ingreso)
+      {
+        throw new NotFoundException("No se encontro ninguna ingreso")
+      }
+    return ingreso
   }
 }

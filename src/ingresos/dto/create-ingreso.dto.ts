@@ -1,4 +1,4 @@
-import { IsDate, IsDateString, IsInt, IsNumber, IsOptional, IsString } from "class-validator"
+import {  IsDateString, IsNumber, IsOptional, IsString } from "class-validator"
 
 export class CreateIngresoDto {
 
@@ -22,5 +22,5 @@ export class CreateIngresoDto {
     evento_id?:number
 
     @IsNumber()
-    persona_id:number   
+    personaId:number   
 }

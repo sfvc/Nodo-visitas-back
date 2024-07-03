@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Area } from "src/area/entities/area.entity";
+import { Ingresos } from "src/ingresos/entities/ingreso.entity";
+import { Roles } from "src/roles/entities/role.entity";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Persona {
@@ -18,10 +21,14 @@ export class Persona {
     @Column('text')
     telefono:string
 
-    @Column({type:'numeric', nullable:true})
-    area_id:number
+    @OneToMany(()=>Ingresos,(ingresos)=>ingresos.persona,{cascade:true})
+    ingresos?:Ingresos
 
-    @Column({type:'numeric', nullable:true})
-    rol_id:number   
+    @ManyToOne(()=>Roles,(roles)=>roles.persona)
+    roles?:Roles
+
+    @ManyToOne(()=>Area,(area)=>area.persona)
+    area?:Area
+
 
 }

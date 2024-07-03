@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Persona } from "src/persona/entities/persona.entity";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Ingresos {
@@ -17,9 +18,7 @@ export class Ingresos {
     @Column({type:'time'})
     hora:string
 
-    @Column({type:'numeric', nullable:true})
-    evento_id:number
+    @ManyToOne(()=>Persona,(persona)=>persona.ingresos)
+    persona:Persona
 
-    @Column({type:'numeric'})
-    persona_id:number   
 }
