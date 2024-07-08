@@ -40,4 +40,10 @@ export class PersonaController {
   {
     return this.personaService.buscarPersona(term);
   }
+
+  @Get('buscar/dni/:term')
+  async buscarDni(@Param('term') term:string)
+  {
+    return this.personaService.buscarDocumento(term)
+  }
 }

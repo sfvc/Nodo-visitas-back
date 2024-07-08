@@ -6,6 +6,7 @@ import { RolesModule } from './roles/roles.module';
 import { IngresosModule } from './ingresos/ingresos.module';
 import { CommonModule } from './common/common.module';
 import { AreaModule } from './area/area.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -23,7 +24,8 @@ import { AreaModule } from './area/area.module';
      RolesModule,
      IngresosModule,
      CommonModule,
-     AreaModule
+     AreaModule,
+     SeedModule
     ],
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger, NotFoundException, Query } from '@nestjs/common';
 import { CreatePersonaDto } from './dto/create-persona.dto';
 import { UpdatePersonaDto } from './dto/update-persona.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -109,6 +109,35 @@ export class PersonaService {
     .leftJoinAndSelect('persona.area', 'area')
     .where('LOWER(persona.nombre) LIKE :search OR LOWER(persona.apellido) LIKE :search', { search: `%${search}%`})
     .getMany();
+    if(!persona)
+      {
+        throw new NotFoundException("No se encontro ninguna persona")
+      }
+    return persona
+  }
+
+  async eliminarPersonas()
+  {
+    const query=this.personaRepository.createQueryBuilder('persona');
+
+    try {
+      await this.personaRepository.query('TRUNCATE TABLE persona RESTART IDENTITY CASCADE');
+      await query.delete().where({}).execute();
+      return true
+      
+    } catch (error) {
+      return this.handleDBExeptions(error)
+    }
+  }
+
+  async buscarDocumento(term: string)
+  {
+    const persona=await this.personaRepository
+    .createQueryBuilder('persona')
+    .leftJoinAndSelect('persona.roles', 'roles')
+    .leftJoinAndSelect('persona.area', 'area')
+    .where('persona.dni=:term', {term})
+    .getOne();
     if(!persona)
       {
         throw new NotFoundException("No se encontro ninguna persona")

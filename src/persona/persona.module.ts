@@ -9,6 +9,7 @@ import { Area } from 'src/area/entities/area.entity';
 @Module({
   controllers: [PersonaController],
   providers: [PersonaService],
-  imports:[TypeOrmModule.forFeature([Persona,Roles,Area])]
+  imports:[TypeOrmModule.forFeature([Persona,Roles,Area])],
+  exports:[TypeOrmModule,PersonaService]
 })
 export class PersonaModule {}
