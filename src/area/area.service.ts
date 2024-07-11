@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger, NotFoundException, Query } from '@nestjs/common';
 import { CreateAreaDto } from './dto/create-area.dto';
 import { UpdateAreaDto } from './dto/update-area.dto';
 import { Area } from './entities/area.entity';
@@ -59,6 +59,18 @@ export class AreaService {
     if(!area) throw new NotFoundException("No se encontro el area")
       await this.areaRepository.remove(area);
     return `Area eliminado correctamente`;
+  }
+
+  async eliminarArea()
+  {
+    const query=this.areaRepository.createQueryBuilder('area')
+    try {
+      await this.areaRepository.query('TRUNCATE TABLE area RESTART IDENTITY CASCADE');
+      await query.delete().where({}).execute();
+      return true;
+    } catch (error) {
+      return this.handleDBExeptions(error)
+    }
   }
 
   private handleDBExeptions(error:any)

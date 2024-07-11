@@ -14,10 +14,13 @@ export class CreatePersonaDto {
     @IsString()
     telefono:string
 
+    @IsString()
+    funcion?:string
+
     @IsNumber()
     areaId?:number   
 
     @IsNumber()
-    rolId:number   
+    rolId?:number   
 
 }

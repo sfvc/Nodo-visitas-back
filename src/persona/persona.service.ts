@@ -132,6 +132,7 @@ export class PersonaService {
 
   async buscarDocumento(term: string)
   {
+
     const persona=await this.personaRepository
     .createQueryBuilder('persona')
     .leftJoinAndSelect('persona.roles', 'roles')

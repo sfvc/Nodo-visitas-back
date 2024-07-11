@@ -21,6 +21,9 @@ export class Persona {
     @Column('text')
     telefono:string
 
+    @Column('text', {nullable:true})
+    funcion:string
+
     @OneToMany(()=>Ingresos,(ingresos)=>ingresos.persona,{cascade:true})
     ingresos?:Ingresos
 
