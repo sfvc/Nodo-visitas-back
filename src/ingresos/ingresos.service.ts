@@ -82,6 +82,7 @@ export class IngresosService {
     .createQueryBuilder('ingreso')
     .leftJoinAndSelect('ingreso.persona', 'persona')
     .where('ingreso.dia= :term ', { term})
+    .orderBy('time','DESC')
     .getMany();
     if(!ingreso)
       {
