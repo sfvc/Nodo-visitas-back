@@ -48,7 +48,7 @@ export class IngresosService {
 
   async findAll(PaginationDto:PaginationDto) {
     let {limit=10,offset=0}=PaginationDto;
-    const ingreso=await this.ingresosRepository.find({take:limit,skip:offset,relations: ['persona']});
+    const ingreso=await this.ingresosRepository.find({take:limit,skip:offset,relations: ['persona'],order: {hora: 'DESC'}});
 
     if(!ingreso)
       {
@@ -82,7 +82,7 @@ export class IngresosService {
     .createQueryBuilder('ingreso')
     .leftJoinAndSelect('ingreso.persona', 'persona')
     .where('ingreso.dia= :term ', { term})
-    .orderBy('time','DESC')
+    .orderBy('hora','DESC')
     .getMany();
     if(!ingreso)
       {
